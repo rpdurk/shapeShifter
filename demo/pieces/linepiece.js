@@ -1,0 +1,56 @@
+class LinePiece extends GamePiece {
+  constructor(x, gameController, dataContext, color) {
+    super(PIECE_TYPES.T_PIECE, x, gameController, dataContext, color);
+    this.squares = this.generateSquares();
+  }
+
+  generateSquares() {
+    return [{
+      i: 0,
+      j: this.x,
+    },{
+      i: 1,
+      j: this.x
+    }, {
+      i: 2,
+      j: this.x
+    }, {
+      i: 3,
+      j: this.x
+    }];
+  }
+
+  getNextClockwiseRotatedState() {
+    var nextState = Util.deepCopyArray(this.squares);
+    var nextRotationState = null;
+
+    if (this.rotationState == ROTATION_STATE.ONE) {
+      nextState[0].i += 1;
+      nextState[0].j += 1;
+
+      nextState[2].i -= 1;
+      nextState[2].j -= 1;
+
+      nextState[3].i -= 2;
+      nextState[3].j -= 2;
+
+      nextRotationState = ROTATION_STATE.TWO;
+    } else if (this.rotationState == ROTATION_STATE.TWO) {
+      nextState[0].i -= 1;
+      nextState[0].j -= 1;
+
+      nextState[2].i += 1;
+      nextState[2].j += 1;
+
+      nextState[3].i += 2;
+      nextState[3].j += 2;
+
+      nextRotationState = ROTATION_STATE.ONE;
+    }
+
+    return {
+      nextState: nextState,
+      nextRotationState: nextRotationState
+    };
+  }
+}
