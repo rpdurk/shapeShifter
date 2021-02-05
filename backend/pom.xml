@@ -14,6 +14,15 @@
         <version>2.0.5.RELEASE</version>
     </parent>
 
+    <properties>
+        <db.url>jdbc:mysql://localhost:3306/shapeshifter</db.url>
+        <db.username>root</db.username>
+        <db.password>password</db.password>
+        <org.jooq.version>3.14.7</org.jooq.version>
+    </properties>
+
+
+
     <dependencies>
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->
@@ -74,6 +83,27 @@
             <artifactId>jooq-codegen</artifactId>
             <version>3.14.7</version>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.177</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -93,6 +123,73 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>3.0</version>
+            
+                <!-- Note that we're executing the Flyway
+                    plugin in the "generate-sources" phase -->
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            
+                <!-- Note that we need to prefix the db/migration
+                    path with filesystem: to prevent Flyway
+                    from looking for our migration scripts
+                    only on the classpath -->
+                <configuration>
+                    <url>${db.url}</url>
+                    <user>${db.username}</user>
+                    <password>${db.password}</password>
+                    <locations>
+                        <location>filesystem:src/main/resources/db/migration</location>
+                    </locations>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>${org.jooq.version}</version>
+            
+                <!-- The jOOQ code generation plugin is also 
+                    executed in the generate-sources phase,
+                    prior to compilation -->
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            
+                <!-- This is a minimal working configuration. 
+                    See the manual's section about the code
+                    generator for more details -->
+                <configuration>
+                    <jdbc>
+                        <url>${db.url}</url>
+                        <user>${db.username}</user>
+                        <password>${db.password}</password>
+                    </jdbc>
+                    <generator>
+                        <database>
+                            <includes>.*</includes>
+                            <!-- <inputSchema>FLYWAY_TEST</inputSchema> -->
+                        </database>
+                        <target>
+                            <packageName>com.shapeshifter.jooq</packageName>
+                            <directory>target/generated-sources/jooq-h2</directory>
+                        </target>
+                    </generator>
+                </configuration>
             </plugin>
         </plugins>
     </build>
