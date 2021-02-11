@@ -1,6 +1,6 @@
-class sPiece extends GamePiece {
+class zPiece extends GamePiece {
     constructor(x, gameController, dataContext, color) {
-        super(PIECE_TYPES.S_PIECE, x, gameController, dataContext, color);
+        super(PIECE_TYPES.Z_PIECE, x, gameController, dataContext, color);
         this.squares = this.generateSquares();
     }
 // confirm generate square shape works
@@ -9,14 +9,14 @@ class sPiece extends GamePiece {
             i: 0,
             j: this.x,
         },{
-            i: -1,
-            j: this.x,
+            i: 0,
+            j: this.x =1,
         },{
             i: -1,
-            j: this.x -1,
+            j: this.x +1,
         },{
             i: -2,
-            j: this.x -2,
+            j: this.x +2,
         }]
     }
 
