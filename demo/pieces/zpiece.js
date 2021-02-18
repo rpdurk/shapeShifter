@@ -10,13 +10,13 @@ class zPiece extends GamePiece {
             j: this.x,
         },{
             i: 0,
-            j: this.x =1,
+            j: this.x -1,
         },{
-            i: -1,
-            j: this.x +1,
+            i: 1,
+            j: this.x -1,
         },{
-            i: -2,
-            j: this.x +2,
+            i: 1,
+            j: this.x -2,
         }]
     }
 

@@ -21,20 +21,25 @@ const ROTATION_STATE = {
 
 const DEFAULT_L_COLOR = "#43AA8B";
 const DEFAULT_T_COLOR = "#FF686B"
-const DEAFULT_SQ_COLOR = "#d6b300";
+const DEFAULT_SQ_COLOR = "#d6b300";
 const DEFAULT_LINE_COLOR = "#00819b";
+const DEFAULT_S_COLOR = "#FF8C00";
+const DEFAULT_Z_COLOR = "#00FF00";
+const DEFAULT_REVERSE_L_COLOR = "#4B0082";
 
 const COLORS = {
-  "#A1A1A1": "#F0F0F0",
-  "#43AA8B": "#B3DDD0", // default L color?
-  "#FF686B": "#ffb3b5", // default T color?
-  "#d6b300": "#ffe24d",
-  "#00819b": "#4de1ff",
+  [DEFAULT_L_COLOR]: "#B3DDD0", // default L color?
+  [DEFAULT_T_COLOR]: "#ffb3b5", // default T color?
+  [DEFAULT_SQ_COLOR]: "#ffe24d",
+  [DEFAULT_LINE_COLOR]: "#4de1ff",
+  [DEFAULT_S_COLOR]: "#FFA500",
+  [DEFAULT_Z_COLOR]: "#7CFC00",
+  [DEFAULT_REVERSE_L_COLOR]: "#9400D3",
 }
 
 const LEFT_ARROW_KEY_CODE = 37;
 const RIGHT_ARROW_KEY_CODE = 39;
-const DOWN_ARRAW_KEY_CODE = 40;
+const DOWN_ARROW_KEY_CODE = 40;
 
 // How long to wait before continsly moving the piece
 const HOLD_MOVE_INTERVAL_INITIAL = 100;
@@ -87,16 +92,22 @@ class GameController {
   }
 
   getRandomPiece() {
-    var rand = Math.floor(Math.random() * 4);
+    var rand = Math.floor(Math.random() * 7);
 
     if (rand == 0) {
-      return new LPiece(4, this, this.gameDataContext, "#43AA8B");
+      return new LPiece(4, this, this.gameDataContext, DEFAULT_L_COLOR);
     } else if (rand == 1) {
-      return new TPiece(4, this, this.gameDataContext, "#FF686B");
+      return new TPiece(4, this, this.gameDataContext, DEFAULT_T_COLOR);
     } else if (rand == 2) {
-      return new SquarePiece(4, this, this.gameDataContext, "#d6b300");
-    } else {
+      return new SquarePiece(4, this, this.gameDataContext, DEFAULT_SQ_COLOR);
+    } else if (rand == 3) {
       return new LinePiece(4, this, this.gameDataContext, DEFAULT_LINE_COLOR);
+    } else if (rand == 4) {
+      return new zPiece(4, this, this.gameDataContext, DEFAULT_Z_COLOR);
+    } else if (rand == 5) {
+      return new sPiece(4, this, this.gameDataContext, DEFAULT_S_COLOR);
+    } else {
+      return new reverseLPiece(4, this, this.gameDataContext, DEFAULT_REVERSE_L_COLOR);
     }
   }
 
@@ -163,6 +174,7 @@ class GameController {
   doClearRows(clearedRows) {
     clearedRows.forEach(i => {
       for(var j = 0; j < this.gameDataContext.squares[0].length; j++) {
+        // read meta data and add to total score and player score
         this.gameDataContext.squares[i][j] = {
           isEmpty: true
         };
@@ -245,7 +257,7 @@ class GameController {
         this.handleRightKeyDown();
         // event.preventDefault();
         break;
-      case DOWN_ARRAW_KEY_CODE:
+      case DOWN_ARROW_KEY_CODE:
         this.handleDownKeyDown();
         // event.preventDefault();
         break;
@@ -263,7 +275,7 @@ class GameController {
       case RIGHT_ARROW_KEY_CODE:
         this.handleRightKeyUp();
         break;
-      case DOWN_ARRAW_KEY_CODE:
+      case DOWN_ARROW_KEY_CODE:
         this.handleDownKeyUp();
     }
   }
