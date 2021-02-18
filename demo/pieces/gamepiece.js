@@ -1,11 +1,21 @@
 class GamePiece {
   // TODO reconcile gameController and gameDataContext, should only need one
-  constructor(type, x, gameController, gameDataContext, color) {
+  constructor(type, x, gameController, gameDataContext, color, playerToken) {
     this.type = type;
     this.x = x;
     this.gameDataContext = gameDataContext;
     this.color = color;
     this.rotationState = ROTATION_STATE.ONE
+    this.playerToken = playerToken;
+  }
+
+  generateSquares() {
+    let squares = [];
+    for (i= 0; i <= 3; i++) {
+      squares.push({playerToken: this.playerToken
+      })
+    }
+    return initializePosition(squares)
   }
 
   update() {
