@@ -5,6 +5,7 @@ class sPiece extends GamePiece {
     }
 
     initializePosition(squares) {
+        // [0] represents bottom left of s piece
         squares[0].i = 0;
         squares[0].j = this.x;
         squares[1].i = 0;
@@ -21,27 +22,42 @@ class sPiece extends GamePiece {
         var nextRotationState = null;
 
         if (this.rotationState == ROTATION_STATE.ONE) {
-            // update top piece
-
             // update bottom left
-        
-            // update bottom right
+            nextState[0].i += 1;
+            nextState[0].j += 1;
+
+            // update top left
+            nextState[0].i += 1;
+            nextState[0].j -= 1;
+
+            // update top right
+            nextState[0].j -= 2;
 
             nextRotationState = ROTATION_STATE.TWO;
         } else if (this.rotationState == ROTATION_STATE.TWO) {
-            // update top piece
-
             // update bottom left
-        
-            // update bottom right
+            nextState[0].i += 1;
+            nextState[0].j -= 1;
+
+            // update top left
+            nextState[0].i -= 1;
+            nextState[0].j -= 1;
+
+            // update top right
+            nextState[0].i -= 2;
 
             nextRotationState = ROTATION_STATE.THREE;
         } else if (this.rotationState == ROTATION_STATE.THREE) {
-                        // update top piece
-
             // update bottom left
-        
-            // update bottom right
+            nextState[0].i -= 1;
+            nextState[0].j -= 1;
+
+            // update top left
+            nextState[0].i -= 1;
+            nextState[0].j += 1;
+
+            // update top right
+            nextState[0].j -= 2;
 
             nextRotationState = ROTATION_STATE.ONE;
         }

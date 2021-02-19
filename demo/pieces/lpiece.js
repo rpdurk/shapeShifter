@@ -5,6 +5,7 @@ class LPiece extends GamePiece {
   }
 
   initializePosition(squares) {
+    // [0] represents top the L piece
     squares[0].i = 0;
     squares[0].j = this.x;
     squares[1].i = 1;
