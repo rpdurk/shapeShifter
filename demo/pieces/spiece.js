@@ -27,11 +27,11 @@ class sPiece extends GamePiece {
             nextState[0].j += 1;
 
             // update top left
-            nextState[0].i += 1;
-            nextState[0].j -= 1;
+            nextState[2].i += 1;
+            nextState[2].j -= 1;
 
             // update top right
-            nextState[0].j -= 2;
+            nextState[3].j -= 2;
 
             nextRotationState = ROTATION_STATE.TWO;
         } else if (this.rotationState == ROTATION_STATE.TWO) {
@@ -40,11 +40,11 @@ class sPiece extends GamePiece {
             nextState[0].j -= 1;
 
             // update top left
-            nextState[0].i -= 1;
-            nextState[0].j -= 1;
+            nextState[2].i -= 1;
+            nextState[2].j -= 1;
 
             // update top right
-            nextState[0].i -= 2;
+            nextState[3].i -= 2;
 
             nextRotationState = ROTATION_STATE.THREE;
         } else if (this.rotationState == ROTATION_STATE.THREE) {
@@ -53,11 +53,11 @@ class sPiece extends GamePiece {
             nextState[0].j -= 1;
 
             // update top left
-            nextState[0].i -= 1;
-            nextState[0].j += 1;
+            nextState[2].i -= 1;
+            nextState[2].j += 1;
 
             // update top right
-            nextState[0].j -= 2;
+            nextState[3].j -= 2;
 
             nextRotationState = ROTATION_STATE.ONE;
         }

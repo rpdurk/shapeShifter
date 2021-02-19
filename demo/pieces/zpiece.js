@@ -5,6 +5,7 @@ class zPiece extends GamePiece {
     }
 
     initializePosition(squares) {
+        // [0] represents top left of z
         squares[0].i = 0;
         squares[0].j = this.x;
         squares[1].i = 0;
