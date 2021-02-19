@@ -1,23 +1,19 @@
 class SquarePiece extends GamePiece {
-  constructor(x, gameController, dataContext, color) {
-    super(PIECE_TYPES.SQ_PIECE, x, gameController, dataContext, color);
+  constructor(x, gameController, dataContext, color, playerToken) {
+    super(PIECE_TYPES.SQ_PIECE, x, gameController, dataContext, color, playerToken);
     this.squares = this.generateSquares();
   }
 
-  generateSquares() {
-    return [{
-      i: 0,
-      j: this.x,
-    },{
-      i: 0,
-      j: this.x + 1
-    }, {
-      i: 1,
-      j: this.x
-    }, {
-      i: 1,
-      j: this.x + 1
-    }];
+  initializePosition(squares) {
+    squares[0].i = 0;
+    squares[0].j = this.x;
+    squares[1].i = 0;
+    squares[1].j = this.x +1;
+    squares[2].i = 1;
+    squares[2].j = this.x;
+    squares[3].i = 1;
+    squares[3].j = this.x +1;
+    return squares;
   }
 
   getNextClockwiseRotatedState() {
