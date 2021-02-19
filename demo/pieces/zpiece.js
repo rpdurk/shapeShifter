@@ -23,26 +23,41 @@ class zPiece extends GamePiece {
 
         if (this.rotationState == ROTATION_STATE.ONE) {
             // update top piece
+            nextState[0].i += 1;
+            nextState[0].j += 1;
 
             // update bottom left
-        
+            nextState[2].i -= 1;
+            nextState[2].j += 1;
+
             // update bottom right
+            nextState[3].i -= 2;
 
             nextRotationState = ROTATION_STATE.TWO;
         } else if (this.rotationState == ROTATION_STATE.TWO) {
             // update top piece
+            nextState[0].i += 1;
+            nextState[0].j -= 1;
 
             // update bottom left
-        
+            nextState[2].i += 1;
+            nextState[2].j += 1;
+
             // update bottom right
+            nextState[3].j += 2;
 
             nextRotationState = ROTATION_STATE.THREE;
         } else if (this.rotationState == ROTATION_STATE.THREE) {
-                        // update top piece
+            // update top piece
+            nextState[0].i -= 1;
+            nextState[0].j -= 1;
 
             // update bottom left
-        
+            nextState[2].i += 1;
+            nextState[2].j -= 1;
+
             // update bottom right
+            nextState[3].i += 2;
 
             nextRotationState = ROTATION_STATE.ONE;
         }
