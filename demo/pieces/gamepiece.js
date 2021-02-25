@@ -11,11 +11,11 @@ class GamePiece {
 
   generateSquares() {
     let squares = [];
-    for (i= 0; i <= 3; i++) {
+    for (let i= 0; i <= 3; i++) {
       squares.push({playerToken: this.playerToken
       })
     }
-    return initializePosition(squares)
+    return this.initializePosition(squares)
   }
 
   update() {
@@ -108,13 +108,13 @@ class GamePiece {
     };
   }
 
-  willCollide(state) {
+  willCollide(state, isSpawn) {
     var collision = false;
     state.forEach(square => {
       var i = square.i;
       var j = square.j;
 
-      if (this.ownsPiece(i, j)) {
+      if ((!isSpawn) && (this.ownsPiece(i, j))) {
       }
       // check out of bounds
       else if (i < 0

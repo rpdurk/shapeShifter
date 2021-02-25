@@ -18,7 +18,7 @@ class zPiece extends GamePiece {
       }
 
     getNextClockwiseRotatedState() {
-        var nexState = Util.deepCopyArray(this.squares);
+        var nextState = Util.deepCopyArray(this.squares);
         var nextRotationState = null;
 
         if (this.rotationState == ROTATION_STATE.ONE) {
