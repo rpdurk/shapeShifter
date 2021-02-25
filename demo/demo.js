@@ -80,16 +80,13 @@ class GameController {
 
   spawnPiece() {
     this.currentPiece = this.getRandomPiece();
-    console.log(this.currentPiece.squares)
-    // debugger;
-    // TODO
     // check if the game is over
     if (this.currentPiece.willCollide(this.currentPiece.squares, true)) {
       this.currentPiece.updateDataContext();
-      console.log("end");
+      // console.log("end");
       this.stopGame();
     } else {
-      console.log("spawn ok");
+      // console.log("spawn ok");
     }
   }
 
