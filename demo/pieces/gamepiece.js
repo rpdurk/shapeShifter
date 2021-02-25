@@ -11,11 +11,11 @@ class GamePiece {
 
   generateSquares() {
     let squares = [];
-    for (i= 0; i <= 3; i++) {
+    for (let i= 0; i <= 3; i++) {
       squares.push({playerToken: this.playerToken
       })
     }
-    return initializePosition(squares)
+    return this.initializePosition(squares)
   }
 
   update() {
