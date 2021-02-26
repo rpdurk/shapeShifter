@@ -57,7 +57,7 @@ class sPiece extends GamePiece {
             nextState[2].j += 1;
 
             // update top right
-            nextState[3].j -= 2;
+            nextState[3].i -= 2;
 
             nextRotationState = ROTATION_STATE.ONE;
         }
