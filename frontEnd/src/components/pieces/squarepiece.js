@@ -1,3 +1,8 @@
+import GamePiece from '../gamepiece';
+import Util from '../../utils/util';
+import ROTATION_STATE from '../gamecontroller';
+import PIECE_TYPES from '../gamecontroller';
+
 class SquarePiece extends GamePiece {
   constructor(x, gameController, dataContext, color, playerToken) {
     super(PIECE_TYPES.SQ_PIECE, x, gameController, dataContext, color, playerToken);
@@ -25,3 +30,5 @@ class SquarePiece extends GamePiece {
     };
   }
 }
+
+export default SquarePiece;

@@ -1,4 +1,9 @@
-class zPiece extends GamePiece {
+import GamePiece from '../gamepiece';
+import Util from '../../utils/util';
+import ROTATION_STATE from '../gamecontroller';
+import PIECE_TYPES from '../gamecontroller';
+
+class ZPiece extends GamePiece {
     constructor(x, gameController, dataContext, color, playerToken) {
         super(PIECE_TYPES.Z_PIECE, x, gameController, dataContext, color, playerToken);
         this.squares = this.generateSquares();
@@ -62,9 +67,11 @@ class zPiece extends GamePiece {
             nextRotationState = ROTATION_STATE.ONE;
         }
 
-    return {
-        nextState: nextState,
-        nextRotationState: nextRotationState
+        return {
+            nextState: nextState,
+            nextRotationState: nextRotationState
         };
     }
 }
+
+export default ZPiece;

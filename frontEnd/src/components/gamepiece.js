@@ -1,3 +1,6 @@
+import Util from '../utils/util';
+import ROTATION_STATE from './gamecontroller';
+
 class GamePiece {
   // TODO reconcile gameController and gameDataContext, should only need one
   constructor(type, x, gameController, gameDataContext, color, playerToken) {
@@ -23,7 +26,7 @@ class GamePiece {
   }
 
   moveLeft() {
-    var nextState = this.leftShift(this.squares);
+    let nextState = this.leftShift(this.squares);
     if (this.willCollide(nextState)) {
       return;
     }
@@ -32,7 +35,7 @@ class GamePiece {
   }
 
   moveRight() {
-    var nextState = this.rightShift(this.squares);
+    let nextState = this.rightShift(this.squares);
     if (this.willCollide(nextState)) {
       return;
     }
@@ -41,7 +44,7 @@ class GamePiece {
   }
 
   moveDown() {
-    var nextState = this.downShift(this.squares);
+    let nextState = this.downShift(this.squares);
     if (this.willCollide(nextState)) {
       return;
     }
@@ -51,8 +54,8 @@ class GamePiece {
 
   rotateClockwise() {
     const nextClockwiseRotatedState = this.getNextClockwiseRotatedState();
-    var collisionResult = this.checkCollisionsAndProvideUpdatedState(
-      nextClockwiseRotatedState.nextState);
+    let collisionResult = this.checkCollisionsAndProvideUpdatedState(
+        nextClockwiseRotatedState.nextState);
     if (collisionResult.canApplyNextState) {
       this.squares = collisionResult.nextState;
       this.rotationState = nextClockwiseRotatedState.nextRotationState;
@@ -76,8 +79,8 @@ class GamePiece {
   }
 
   checkCollisionsAndProvideUpdatedState(state) {
-    var canApplyNextState = true;
-    var nextState = state;
+    let canApplyNextState = true;
+    let nextState = state;
 
     if (this.willCollide(state)) {
       // try shifting right
@@ -111,22 +114,22 @@ class GamePiece {
   willCollide(state, isSpawn) {
     var collision = false;
     state.forEach(square => {
-      var i = square.i;
-      var j = square.j;
+      let i = square.i;
+      let j = square.j;
 
       if ((!isSpawn) && (this.ownsPiece(i, j))) {
       }
       // check out of bounds
       else if (i < 0
-        || i >= this.gameDataContext.squares.length
-        || j < 0
-        || j >= this.gameDataContext.squares[0].length) {
-          collision = true;
-        }
+          || i >= this.gameDataContext.squares.length
+          || j < 0
+          || j >= this.gameDataContext.squares[0].length) {
+        collision = true;
+      }
 
-        // check square is not empty and is not of current piece
+      // check square is not empty and is not of current piece
       else if (
-        this.gameDataContext.squares[i][j].isEmpty == false
+          this.gameDataContext.squares[i][j].isEmpty == false
       ) {
         collision = true;
       }
@@ -135,7 +138,7 @@ class GamePiece {
   }
 
   ownsPiece(i, j) {
-    var owns = false;
+    let owns = false;
     this.squares.forEach(square => {
       if (square.i == i && square.j == j ) {
         owns = true;
@@ -146,7 +149,7 @@ class GamePiece {
 
   rightShift(state) {
     let copy = Util.deepCopyArray(state);
-    for(var i = 0; i < copy.length; i++) {
+    for(let i = 0; i < copy.length; i++) {
       copy[i].j += 1;
     }
     return copy;
@@ -154,7 +157,7 @@ class GamePiece {
 
   leftShift(state) {
     let copy = Util.deepCopyArray(state);
-    for(var i = 0; i < copy.length; i++) {
+    for(let i = 0; i < copy.length; i++) {
       copy[i].j -= 1;
     }
     return copy;
@@ -162,7 +165,7 @@ class GamePiece {
 
   upShift(state) {
     let copy = Util.deepCopyArray(state);
-    for(var i = 0; i < copy.length; i++) {
+    for(let i = 0; i < copy.length; i++) {
       copy[i].i -= 1;
     }
     return copy;
@@ -170,13 +173,13 @@ class GamePiece {
 
   downShift(state) {
     let copy = Util.deepCopyArray(state);
-    for(var i = 0; i < copy.length; i++) {
+    for(let i = 0; i < copy.length; i++) {
       copy[i].i += 1;
     }
     return copy;
   }
 
-  updateDataContext() {
+  updateDataContext(state) {
     this.squares.forEach(square => {
 
       // errors when i is out of gamedata context bounds
@@ -189,3 +192,5 @@ class GamePiece {
     });
   }
 }
+
+export default GamePiece;

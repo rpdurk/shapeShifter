@@ -1,7 +1,12 @@
-class reverseLPiece extends GamePiece {
+import GamePiece from '../gamepiece';
+import Util from '../../utils/util';
+import ROTATION_STATE from '../gamecontroller';
+import PIECE_TYPES from '../gamecontroller';
+
+class ReverseLPiece extends GamePiece {
     constructor(x, gameController, dataContext, color, playerToken) {
-       super(PIECE_TYPES.REVERSE_L_PIECE, x, gameController, dataContext, color, playerToken);
-       this.squares = this.generateSquares();
+        super(PIECE_TYPES.REVERSE_L_PIECE, x, gameController, dataContext, color, playerToken);
+        this.squares = this.generateSquares();
     }
 
     initializePosition(squares) {
@@ -67,3 +72,5 @@ class reverseLPiece extends GamePiece {
         };
     }
 }
+
+export default ReverseLPiece;

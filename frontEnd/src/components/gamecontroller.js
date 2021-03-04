@@ -1,8 +1,14 @@
+import TPiece from '../components/pieces/tpiece';
+import SquarePiece from '../components/pieces/squarepiece';
+import LinePiece from '../components/pieces/linepiece';
+import SPiece from '../components/pieces/spiece';
+import ZPiece from '../components/pieces/zpiece';
+
 const HEIGHT = 800;
 const WIDTH = 400;
-const SIZE = 40;
+export const SIZE = 40;
 
-const PIECE_TYPES = {
+export const PIECE_TYPES = {
   L_PIECE : 0,
   L_PIECE_MIRROR : 1,
   Z_PIECE : 2,
@@ -12,7 +18,7 @@ const PIECE_TYPES = {
   LINE_PIECE : 6,
 }
 
-const ROTATION_STATE = {
+export const ROTATION_STATE = {
   ONE: 0,
   TWO: 1,
   THREE: 2,
@@ -27,7 +33,7 @@ const DEFAULT_S_COLOR = "#FF8C00";
 const DEFAULT_Z_COLOR = "#00FF00";
 const DEFAULT_REVERSE_L_COLOR = "#4B0082";
 
-const COLORS = {
+export const COLORS = {
   [DEFAULT_L_COLOR]: "#B3DDD0", // default L color?
   [DEFAULT_T_COLOR]: "#ffb3b5", // default T color?
   [DEFAULT_SQ_COLOR]: "#ffe24d",
@@ -102,11 +108,11 @@ class GameController {
     } else if (rand == 3) {
       return new LinePiece(4, this, this.gameDataContext, DEFAULT_LINE_COLOR);
     } else if (rand == 4) {
-      return new zPiece(4, this, this.gameDataContext, DEFAULT_Z_COLOR);
+      return new ZPiece(4, this, this.gameDataContext, DEFAULT_Z_COLOR);
     } else if (rand == 5) {
-      return new sPiece(4, this, this.gameDataContext, DEFAULT_S_COLOR);
+      return new SPiece(4, this, this.gameDataContext, DEFAULT_S_COLOR);
     } else {
-      return new reverseLPiece(4, this, this.gameDataContext, DEFAULT_REVERSE_L_COLOR);
+      return new ReverseLPiece(4, this, this.gameDataContext, DEFAULT_REVERSE_L_COLOR);
     }
   }
 
@@ -363,7 +369,7 @@ class GameController {
   }
 }
 
-window.onload = main;
+// window.onload = main;
 
 document.onkeydown = function(event) {
   window.gameController.handleKeydown(event);
@@ -372,21 +378,4 @@ document.onkeyup = function(event) {
   window.gameController.handleKeyUp(event);
 }
 
-class Square {
-  constructor(color, x, y, ctx) {
-    this.color1 = color;
-    this.color2 = COLORS[color];
-    this.ctx = ctx;
-    this.x = x;
-    this.y = y;
-    this.size = SIZE;
-  }
-
-  render() {
-    const size = this.size;
-    this.ctx.fillStyle = this.color1;
-    this.ctx.fillRect(this.x, this.y, this.size, this.size);
-    this.ctx.fillStyle = this.color2;
-    this.ctx.fillRect(this.x + 4, this.y + 4, this.size - 8, this.size - 8);
-  }
-}
+export default GameController;

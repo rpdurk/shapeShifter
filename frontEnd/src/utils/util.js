@@ -26,3 +26,5 @@ class Util {
     console.log(b);
   }
 }
+
+export default Util;
