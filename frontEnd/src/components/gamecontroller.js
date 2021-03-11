@@ -1,8 +1,11 @@
-import TPiece from '../components/pieces/tpiece';
 import SquarePiece from '../components/pieces/squarepiece';
 import LinePiece from '../components/pieces/linepiece';
 import SPiece from '../components/pieces/spiece';
 import ZPiece from '../components/pieces/zpiece';
+import LPiece from '../components/pieces/lpiece';
+import ReverseLPiece from '../components/pieces/reverselpiece';
+import TPiece from '../components/pieces/tpiece';
+import Square from '../components/square';
 
 const HEIGHT = 800;
 const WIDTH = 400;
@@ -52,19 +55,9 @@ const HOLD_MOVE_INTERVAL_INITIAL = 100;
 // How long to wait between squares when the left or right key is held
 const HOLD_MOVE_INTERVAL = 50
 
-function main() {
-  const canvas = document.querySelector("#canvas");
-
-  // Initialize a 2d canvas context
-  const canvasContext = canvas.getContext("2d");
-
-  window.gameController = new GameController(canvasContext);
-  window.gameController.startGame();
-}
-
 class GameController {
-  constructor(canvasContext) {
-    this.canvasContext = canvasContext;
+  constructor(canvasRef) {
+    this.canvasRef = canvasRef;
     this.gameDataContext = {
       squares: this.initializeGameData()
     }
@@ -129,8 +122,11 @@ class GameController {
   }
 
   gameLoop() {
-    this.canvasContext.fillStyle = "#000000";
-    this.canvasContext.fillRect(0, 0, WIDTH, HEIGHT);
+    // this.canvasContext.fillStyle = "#000000";
+    this.canvasRef.current.getContext("2d").fillStyle = "#000000";
+    // this.canvasContext.fillRect(0, 0, WIDTH, HEIGHT);
+    this.canvasRef.current.getContext("2d").fillRect(0, 0, WIDTH, HEIGHT);
+
     this.gameDataContext.squares = this.initializeGameData();
 
     if (this.currentPiece.shouldLockPiece()) {
@@ -143,8 +139,9 @@ class GameController {
     } else {
       this.currentPiece.updateDataContext();
     }
-    this.render(this.canvasContext, this.gameDataContext);
-
+    this.render(this.canvasRef.current.getContext("2d"), this.gameDataContext);
+    // console.log(this.canvasRef.current.getContext("2d"));
+    // console.log(this.gameDataContext);
     if (!this.gameRunning) {
       return;
     }
@@ -218,7 +215,7 @@ class GameController {
         if (!data[i][j].isEmpty) {
           var squareData = data[i][j];
           var square = new Square(squareData.color, SIZE * j, SIZE * i,
-            this.canvasContext);
+            this.canvasRef.current.getContext("2d"));
           square.render();
         }
       }
