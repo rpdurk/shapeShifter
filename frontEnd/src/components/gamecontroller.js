@@ -56,8 +56,7 @@ const HOLD_MOVE_INTERVAL_INITIAL = 100;
 const HOLD_MOVE_INTERVAL = 50
 
 class GameController {
-  constructor(canvasRef) {
-    this.canvasRef = canvasRef;
+  constructor() {
     this.gameDataContext = {
       squares: this.initializeGameData()
     }
@@ -122,10 +121,8 @@ class GameController {
   }
 
   gameLoop() {
-    // this.canvasContext.fillStyle = "#000000";
-    this.canvasRef.current.getContext("2d").fillStyle = "#000000";
-    // this.canvasContext.fillRect(0, 0, WIDTH, HEIGHT);
-    this.canvasRef.current.getContext("2d").fillRect(0, 0, WIDTH, HEIGHT);
+    document.getElementById('canvas').getContext("2d").fillStyle = "#000000";
+    document.getElementById('canvas').getContext("2d").fillRect(0, 0, WIDTH, HEIGHT);
 
     this.gameDataContext.squares = this.initializeGameData();
 
@@ -139,9 +136,7 @@ class GameController {
     } else {
       this.currentPiece.updateDataContext();
     }
-    this.render(this.canvasRef.current.getContext("2d"), this.gameDataContext);
-    // console.log(this.canvasRef.current.getContext("2d"));
-    // console.log(this.gameDataContext);
+    this.render(document.getElementById('canvas').getContext("2d"), this.gameDataContext);
     if (!this.gameRunning) {
       return;
     }
@@ -215,7 +210,7 @@ class GameController {
         if (!data[i][j].isEmpty) {
           var squareData = data[i][j];
           var square = new Square(squareData.color, SIZE * j, SIZE * i,
-            this.canvasRef.current.getContext("2d"));
+            document.getElementById('canvas').getContext("2d"));
           square.render();
         }
       }

@@ -1,5 +1,5 @@
 import COLORS from './gamecontroller';
-import SIZE from './gamecontroller';
+import { SIZE } from './gamecontroller';
 
 class Square {
     constructor(color, x, y, ctx) {
