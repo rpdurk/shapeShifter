@@ -1,8 +1,17 @@
+import SquarePiece from '../components/pieces/squarepiece';
+import LinePiece from '../components/pieces/linepiece';
+import SPiece from '../components/pieces/spiece';
+import ZPiece from '../components/pieces/zpiece';
+import LPiece from '../components/pieces/lpiece';
+import ReverseLPiece from '../components/pieces/reverselpiece';
+import TPiece from '../components/pieces/tpiece';
+import Square from '../components/square';
+
 const HEIGHT = 800;
 const WIDTH = 400;
-const SIZE = 40;
+export const SIZE = 40;
 
-const PIECE_TYPES = {
+export const PIECE_TYPES = {
   L_PIECE : 0,
   L_PIECE_MIRROR : 1,
   Z_PIECE : 2,
@@ -12,7 +21,7 @@ const PIECE_TYPES = {
   LINE_PIECE : 6,
 }
 
-const ROTATION_STATE = {
+export const ROTATION_STATE = {
   ONE: 0,
   TWO: 1,
   THREE: 2,
@@ -27,7 +36,7 @@ const DEFAULT_S_COLOR = "#FF8C00";
 const DEFAULT_Z_COLOR = "#00FF00";
 const DEFAULT_REVERSE_L_COLOR = "#4B0082";
 
-const COLORS = {
+export const COLORS = {
   [DEFAULT_L_COLOR]: "#B3DDD0", // default L color?
   [DEFAULT_T_COLOR]: "#ffb3b5", // default T color?
   [DEFAULT_SQ_COLOR]: "#ffe24d",
@@ -46,19 +55,8 @@ const HOLD_MOVE_INTERVAL_INITIAL = 100;
 // How long to wait between squares when the left or right key is held
 const HOLD_MOVE_INTERVAL = 50
 
-function main() {
-  const canvas = document.querySelector("#canvas");
-
-  // Initialize a 2d canvas context
-  const canvasContext = canvas.getContext("2d");
-
-  window.gameController = new GameController(canvasContext);
-  window.gameController.startGame();
-}
-
 class GameController {
-  constructor(canvasContext) {
-    this.canvasContext = canvasContext;
+  constructor() {
     this.gameDataContext = {
       squares: this.initializeGameData()
     }
@@ -102,11 +100,11 @@ class GameController {
     } else if (rand == 3) {
       return new LinePiece(4, this, this.gameDataContext, DEFAULT_LINE_COLOR);
     } else if (rand == 4) {
-      return new zPiece(4, this, this.gameDataContext, DEFAULT_Z_COLOR);
+      return new ZPiece(4, this, this.gameDataContext, DEFAULT_Z_COLOR);
     } else if (rand == 5) {
-      return new sPiece(4, this, this.gameDataContext, DEFAULT_S_COLOR);
+      return new SPiece(4, this, this.gameDataContext, DEFAULT_S_COLOR);
     } else {
-      return new reverseLPiece(4, this, this.gameDataContext, DEFAULT_REVERSE_L_COLOR);
+      return new ReverseLPiece(4, this, this.gameDataContext, DEFAULT_REVERSE_L_COLOR);
     }
   }
 
@@ -123,8 +121,9 @@ class GameController {
   }
 
   gameLoop() {
-    this.canvasContext.fillStyle = "#000000";
-    this.canvasContext.fillRect(0, 0, WIDTH, HEIGHT);
+    document.getElementById('canvas').getContext("2d").fillStyle = "#000000";
+    document.getElementById('canvas').getContext("2d").fillRect(0, 0, WIDTH, HEIGHT);
+
     this.gameDataContext.squares = this.initializeGameData();
 
     if (this.currentPiece.shouldLockPiece()) {
@@ -137,8 +136,7 @@ class GameController {
     } else {
       this.currentPiece.updateDataContext();
     }
-    this.render(this.canvasContext, this.gameDataContext);
-
+    this.render(document.getElementById('canvas').getContext("2d"), this.gameDataContext);
     if (!this.gameRunning) {
       return;
     }
@@ -212,7 +210,7 @@ class GameController {
         if (!data[i][j].isEmpty) {
           var squareData = data[i][j];
           var square = new Square(squareData.color, SIZE * j, SIZE * i,
-            this.canvasContext);
+            document.getElementById('canvas').getContext("2d"));
           square.render();
         }
       }
@@ -363,7 +361,7 @@ class GameController {
   }
 }
 
-window.onload = main;
+// window.onload = main;
 
 document.onkeydown = function(event) {
   window.gameController.handleKeydown(event);
@@ -372,21 +370,4 @@ document.onkeyup = function(event) {
   window.gameController.handleKeyUp(event);
 }
 
-class Square {
-  constructor(color, x, y, ctx) {
-    this.color1 = color;
-    this.color2 = COLORS[color];
-    this.ctx = ctx;
-    this.x = x;
-    this.y = y;
-    this.size = SIZE;
-  }
-
-  render() {
-    const size = this.size;
-    this.ctx.fillStyle = this.color1;
-    this.ctx.fillRect(this.x, this.y, this.size, this.size);
-    this.ctx.fillStyle = this.color2;
-    this.ctx.fillRect(this.x + 4, this.y + 4, this.size - 8, this.size - 8);
-  }
-}
+export default GameController;

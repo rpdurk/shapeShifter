@@ -1,3 +1,8 @@
+import GamePiece from '../gamepiece';
+import Util from '../../utils/util';
+import ROTATION_STATE from '../gamecontroller';
+import PIECE_TYPES from '../gamecontroller';
+
 class LPiece extends GamePiece {
   constructor(x, gameController, dataContext, color, playerToken) {
     super(PIECE_TYPES.L_PIECE, x, gameController, dataContext, color, playerToken);
@@ -81,3 +86,5 @@ class LPiece extends GamePiece {
     };
   }
 }
+
+export default LPiece;
